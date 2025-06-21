@@ -1,0 +1,14 @@
+{
+  "name": "bb-gpt-bot",
+  "version": "1.0.0",
+  "description": "Webhook for BB bot to generate BJS code using GPT",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "axios": "^1.6.0",
+    "body-parser": "^1.20.2"
+  }
+}
