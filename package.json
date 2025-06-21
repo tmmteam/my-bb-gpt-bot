@@ -4,7 +4,7 @@
   "description": "Webhook for BB bot to generate BJS code using GPT",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.18.2",
