@@ -1,17 +1,22 @@
-// server.js
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
+
 const app = express();
 app.use(bodyParser.json());
 
 const OPENAI_API_KEY = "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"; // your key
 
+// ✅ FIXED: Add GET route to fix "Cannot GET /"
+app.get("/", (req, res) => {
+  res.send("✅ Webhook is up and running!");
+});
+
 app.post("/", async (req, res) => {
   const prompt = req.body.prompt;
   const callback_url = req.body.bb_options?.callback_url;
 
-  // ✅ 1. Immediate response to BB to prevent timeout
+  // ✅ Respond immediately to BB to prevent timeout
   res.status(200).json({ ok: true });
 
   if (!prompt || !callback_url) return;
@@ -35,12 +40,14 @@ app.post("/", async (req, res) => {
       }
     );
 
-    let answer = gpt.data.choices[0].message.content;
+    const answer = gpt.data.choices[0].message.content;
 
-    // ✅ 2. Send result back to BB
+    // ✅ Send result back to BB
     await axios.post(callback_url, { result: answer });
   } catch (e) {
-    await axios.post(callback_url, { result: "❌ GPT Error: " + (e.message || "Unknown") });
+    await axios.post(callback_url, {
+      result: "❌ GPT Error: " + (e.message || "Unknown")
+    });
   }
 });
 
