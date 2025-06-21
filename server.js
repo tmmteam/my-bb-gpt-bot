@@ -7,7 +7,9 @@ const app = express();
 app.use(bodyParser.json());
 
 const OPENAI_API_KEY = "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"; // 🔒 Replace with your OpenAI API key
-
+app.get("/", (req, res) => {
+  res.send("✅ Webhook is running!");
+});
 app.post("/", async (req, res) => {
   console.log("🔔 BB Request:", req.body);
 
